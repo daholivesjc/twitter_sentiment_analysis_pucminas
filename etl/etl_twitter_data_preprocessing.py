@@ -95,16 +95,6 @@ dataframe = dataframe.filter(F.col('lang')=='pt')
 # adjust created_at to datetime
 dataframe = dataframe.withColumn('created_at_tz', F.to_date(convert_date(F.col('created_at')),'yyyy-MM-dd') )
 
-# have retweets
-dataframe = dataframe.withColumn('have_retweet', 
-   F.when(F.col("retweet_count")>0, 1).otherwise(0)
-)
-
-# have likes
-dataframe = dataframe.withColumn('have_like', 
-   F.when(F.col("like_count")>0, 1).otherwise(0)
-)
-
 # cleaning text
 dataframe = dataframe.withColumn('text_clean', preprocessing(F.col('text')) )
 
@@ -156,13 +146,6 @@ dataframe = dataframe.select(
  .option('mergeSchema', 'true')
  .option('overwriteSchema', 'true')
  .save(path+"/datasource/trusted/tweets_preprocessing", mode='overwrite')) 
-
-
-
-df = spark.read.parquet(path+"/datasource/trusted/tweets_preprocessing")
-
-
-df.select(F.col('twitter_id')).distinct().count()
 
 
 
