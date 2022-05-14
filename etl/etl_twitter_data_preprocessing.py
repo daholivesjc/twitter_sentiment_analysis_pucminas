@@ -57,6 +57,7 @@ def text_preprocessing(instancia):
     
     palavras = [re.sub(r'(ha)\1+', r'\1',word) for word in palavras]
     palavras = [re.sub(r'(uha)\1+', r'\1',word) for word in palavras]
+    palavras = [word for word in palavras if len(word)>1]
 
     palavras = " ".join(palavras) \
         .strip() \
@@ -139,6 +140,25 @@ dataframe = dataframe.select(
     F.col('created_at_tz'),
     F.col('text_clean'),
 ).na.fill(value=0,subset=['like_count','reply_count','retweet_count'])
+
+# lista de candidatos consultados
+precandidatos2022_list = [
+    "lula",
+    "bolsonaro",
+    "sergio moro",
+    "ciro gomes",
+    "joão doria",
+    "rodrigo pacheco",
+    "simone tebet",
+    "alessandro vieira",
+    "aldo rebelo",
+    "andré janones",
+    "felipe d'ávila",
+    "leonardo péricles"      
+]
+
+# seleciona apenas mensagens que foram consultadas pelos nomes dos candidatos
+dataframe = dataframe.filter(F.col('query').isin(precandidatos2022_list))
 
 # save data
 (dataframe
