@@ -17,6 +17,10 @@ import nltk
 # operational system tool
 import os
 
+from nltk.stem.rslp import RSLPStemmer
+
+stemmer = RSLPStemmer()
+
 path = os.path.abspath(os.path.join('..', ''))
 
 # SPARK INSTANCE
@@ -57,7 +61,7 @@ def text_preprocessing(instancia):
     
     palavras = [re.sub(r'(ha)\1+', r'\1',word) for word in palavras]
     palavras = [re.sub(r'(uha)\1+', r'\1',word) for word in palavras]
-    palavras = [word for word in palavras if len(word)>1]
+    palavras = [stemmer.stem(word) for word in palavras]
 
     palavras = " ".join(palavras) \
         .strip() \
@@ -88,7 +92,7 @@ preprocessing = F.udf(
 )
 
 # recent data
-dataframe = spark.read.parquet(path+"/datasource/raw/tweets")
+dataframe = spark.read.parquet(path+"/twitter_ellection_brazil_v2/datasource/raw/tweets")
 
 # filter portugueses tweets
 dataframe = dataframe.filter(F.col('lang')=='pt')

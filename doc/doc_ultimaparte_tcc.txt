@@ -1,0 +1,6 @@
+
+Função build_from_corpus do pacote tensorflow serve para criar o vocabulário da base de dados, ou seja, um bag of words.
+
+ref.: https://www.tensorflow.org/datasets/api_docs/python/tfds/deprecated/text/SubwordTextEncoder
+
+ref.: https://www.economist.com/johnson/2013/05/29/lexical-facts
