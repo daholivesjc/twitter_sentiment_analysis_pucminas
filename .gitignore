@@ -1,3 +1,5 @@
 .parquet
+.csv
+.pkl
 eda/__pycache__/
 etl/__pycache__/
