@@ -1,3 +1,9 @@
 .parquet
+.csv
+.pkl
 eda/__pycache__/
 etl/__pycache__/
+datasource/raw_kaggle/*.csv 
+datasource/refined/tweets_logistic_regression/*.pkl
+datasource/refined/tweets_naive_bayes/*.pkl
+model/checkpoints/*
